@@ -1,24 +1,80 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useCallback, useState, useEffect } from 'react';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+
+import { AppProvider, Frame } from '@shopify/polaris';
+
 import './App.css';
 
+import Navbar from './components/Navbar';
+
 function App() {
+  const [mobileNavigationActive, setMobileNavigationActive] = useState(false);
+
+  const toggleMobileNavigationActive = useCallback(
+    () =>
+      setMobileNavigationActive(
+        (mobileNavigationActive) => !mobileNavigationActive,
+      ),
+    [],
+  );
+
+  const theme = {
+    colors: {
+      topBar: {
+        background: '#FFFFFF',
+        backgroundLighter: '#F4F6F8',
+        backgroundDarker: '#DFE3E8',
+        border: '#C4CDD5',
+        color: '#212B36',
+      },
+    },
+    logo: {
+      width: 40,
+      topBarSource: 'https://raw.githubusercontent.com/jamify/assets/master/logo/alt-logo.svg',
+      url: '/',
+      accessibilityLabel: 'Jamify',
+    },
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div>
+      <AppProvider
+        theme={theme}
+        i18n={{
+          Polaris: {
+            Avatar: {
+              label: 'Avatar',
+              labelWithInitials: 'Avatar with initials {initials}',
+            },
+            Frame: { skipToContent: 'Skip to content' },
+            TopBar: {
+              toggleMenuLabel: 'Toggle menu',
+              SearchField: {
+                clearButtonLabel: 'Clear',
+                search: 'Search',
+              },
+            },
+          },
+        }}
+      >
+        <Frame
+          topBar={<Navbar/>}
+          showMobileNavigation={mobileNavigationActive}
+          onNavigationDismiss={toggleMobileNavigationActive}
         >
-          Learn React
-        </a>
-      </header>
+          <div class="content-container">
+            <Router>
+              <Switch>
+              </Switch>
+            </Router>
+          </div>
+        </Frame>
+      </AppProvider>
     </div>
   );
 }
