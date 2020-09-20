@@ -4,7 +4,11 @@ import {useTranslation} from "react-i18next";
 import { Icon, TopBar, VisuallyHidden } from '@shopify/polaris';
 import { ArrowLeftMinor, LanguageMinor, ProfileMajorMonotone } from '@shopify/polaris-icons';
 
-const Navbar = () => {
+type NavbarProps = {
+  toggleMobileNavigationActive: any,
+}
+
+const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isSecondaryMenuOpen, setIsSecondaryMenuOpen] = useState(false);
 
@@ -77,6 +81,7 @@ const Navbar = () => {
       showNavigationToggle
       userMenu={userMenuMarkup}
       secondaryMenu={secondaryMenuMarkup}
+      onNavigationToggle={toggleMobileNavigationActive}
     />
   );
 }

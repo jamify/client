@@ -6,7 +6,8 @@ import {
   Route,
 } from "react-router-dom";
 
-import { AppProvider, Frame } from '@shopify/polaris';
+import { AppProvider, Frame, Navigation } from '@shopify/polaris';
+import { CirclePlusMajorMonotone, HintMajorMonotone, PopularMajorTwotone } from '@shopify/polaris-icons';
 
 import './App.css';
 
@@ -21,6 +22,35 @@ function App() {
         (mobileNavigationActive) => !mobileNavigationActive,
       ),
     [],
+  );
+
+  const Sidebar = (
+    <Navigation location="/">
+      <Navigation.Section
+        items={[
+          {
+            url: '/popular',
+            label: 'popular',
+            icon: PopularMajorTwotone,
+          },
+          {
+            url: '/new',
+            label: 'new',
+            icon: HintMajorMonotone,
+          },
+        ]}
+      />
+      <Navigation.Section
+        items={[
+          {
+            url: '/create',
+            label: 'create_post',
+            icon: CirclePlusMajorMonotone,
+          },
+        ]}
+        separator
+      />
+    </Navigation>
   );
 
   const theme = {
@@ -63,7 +93,8 @@ function App() {
         }}
       >
         <Frame
-          topBar={<Navbar/>}
+          topBar={<Navbar toggleMobileNavigationActive={toggleMobileNavigationActive}/>}
+          navigation={Sidebar}
           showMobileNavigation={mobileNavigationActive}
           onNavigationDismiss={toggleMobileNavigationActive}
         >
