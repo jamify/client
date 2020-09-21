@@ -4,6 +4,8 @@ import {useTranslation} from "react-i18next";
 import { Icon, TopBar, VisuallyHidden } from '@shopify/polaris';
 import { ArrowLeftMinor, LanguageMinor, ProfileMajorMonotone } from '@shopify/polaris-icons';
 
+import LoginButton from '../LoginButton';
+
 type NavbarProps = {
   toggleMobileNavigationActive: any,
 }
@@ -23,12 +25,6 @@ const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
     () => setIsSecondaryMenuOpen((isSecondaryMenuOpen) => !isSecondaryMenuOpen),
     [],
   );
-
-  const loginButton = (
-    <div>
-      asdfg
-    </div>
-  )
 
   const userMenuMarkup = (
     <TopBar.UserMenu
@@ -79,7 +75,7 @@ const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
   return (
     <TopBar
       showNavigationToggle
-      userMenu={userMenuMarkup}
+      userMenu={<LoginButton />}
       secondaryMenu={secondaryMenuMarkup}
       onNavigationToggle={toggleMobileNavigationActive}
     />

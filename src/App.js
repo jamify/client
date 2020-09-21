@@ -62,6 +62,7 @@ function App() {
         border: '#C4CDD5',
         color: '#212B36',
       },
+      primary: '#40a355',
     },
     logo: {
       width: 40,
@@ -75,6 +76,7 @@ function App() {
     <div>
       <AppProvider
         theme={theme}
+        features={{newDesignLanguage: true}}
         i18n={{
           Polaris: {
             Avatar: {
