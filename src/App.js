@@ -1,17 +1,17 @@
-import React, { useCallback, useState, useEffect } from 'react';
-
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import React, { useCallback, useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { AppProvider, Frame, Navigation } from '@shopify/polaris';
-import { CirclePlusMajorMonotone, HintMajorMonotone, PopularMajorTwotone } from '@shopify/polaris-icons';
+import {
+  CirclePlusMajorMonotone,
+  HintMajorMonotone,
+  PopularMajorTwotone,
+} from '@shopify/polaris-icons';
 
 import './App.css';
 
 import Navbar from './components/Navbar';
+import CallbackPage from './views/CallbackPage';
 
 function App() {
   const [mobileNavigationActive, setMobileNavigationActive] = useState(false);
@@ -19,9 +19,9 @@ function App() {
   const toggleMobileNavigationActive = useCallback(
     () =>
       setMobileNavigationActive(
-        (mobileNavigationActive) => !mobileNavigationActive,
+        (mobileNavigationActive) => !mobileNavigationActive
       ),
-    [],
+    []
   );
 
   const Sidebar = (
@@ -66,7 +66,8 @@ function App() {
     },
     logo: {
       width: 40,
-      topBarSource: 'https://raw.githubusercontent.com/jamify/assets/master/logo/alt-logo.svg',
+      topBarSource:
+        'https://raw.githubusercontent.com/jamify/assets/f3587610a46acb54630041f7276dd010d921dfb8/logo/logo.svg',
       url: '/',
       accessibilityLabel: 'Jamify',
     },
@@ -76,7 +77,7 @@ function App() {
     <div>
       <AppProvider
         theme={theme}
-        features={{newDesignLanguage: true}}
+        features={{ newDesignLanguage: true }}
         i18n={{
           Polaris: {
             Avatar: {
@@ -95,14 +96,21 @@ function App() {
         }}
       >
         <Frame
-          topBar={<Navbar toggleMobileNavigationActive={toggleMobileNavigationActive}/>}
+          topBar={
+            <Navbar
+              toggleMobileNavigationActive={toggleMobileNavigationActive}
+            />
+          }
           navigation={Sidebar}
           showMobileNavigation={mobileNavigationActive}
           onNavigationDismiss={toggleMobileNavigationActive}
         >
-          <div class="content-container">
+          <div>
             <Router>
               <Switch>
+                <Route path="/popular"></Route>
+                <Route path="/new"></Route>
+                <Route path="/callback" component={CallbackPage}></Route>
               </Switch>
             </Router>
           </div>

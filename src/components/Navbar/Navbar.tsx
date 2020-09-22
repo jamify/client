@@ -1,13 +1,28 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import {useTranslation} from "react-i18next";
+import React, { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { Icon, TopBar, VisuallyHidden } from '@shopify/polaris';
-import { ArrowLeftMinor, LanguageMinor, ProfileMajorMonotone } from '@shopify/polaris-icons';
+import {
+  ArrowLeftMinor,
+  LanguageMinor,
+  ProfileMajorMonotone,
+} from '@shopify/polaris-icons';
 
 import LoginButton from '../LoginButton';
 
+import { RootState } from '../../store';
+import { SystemState } from '../../store/system/types';
+import { ProfileState } from '../../store/profile/types';
+import { profile } from 'console';
+
 type NavbarProps = {
-  toggleMobileNavigationActive: any,
+  toggleMobileNavigationActive: any;
+};
+
+function getInitials(displayName: string): string {
+  const initials = displayName.match(/\b\w/g) || [];
+  return ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
 }
 
 const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
@@ -18,13 +33,23 @@ const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
 
   const toggleIsUserMenuOpen = useCallback(
     () => setIsUserMenuOpen((isUserMenuOpen) => !isUserMenuOpen),
-    [],
+    []
   );
 
   const toggleIsSecondaryMenuOpen = useCallback(
     () => setIsSecondaryMenuOpen((isSecondaryMenuOpen) => !isSecondaryMenuOpen),
-    [],
+    []
   );
+
+  const selectSystemState = (state: RootState) => state.system;
+  const systemState: SystemState = useSelector(selectSystemState);
+
+  const selectProfileState = (state: RootState) => state.profile;
+  const profileState: ProfileState = useSelector(selectProfileState);
+
+  const isLoggedIn = () => {
+    return systemState.loggedIn;
+  };
 
   const userMenuMarkup = (
     <TopBar.UserMenu
@@ -36,9 +61,10 @@ const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
           items: [{ content: 'Logout', icon: ArrowLeftMinor }],
         },
       ]}
-      name="Daniel Wu"
-      detail="wuon@protonmail.com"
-      initials="DW"
+      name={profileState.displayName}
+      detail={profileState.email}
+      initials={getInitials(profileState.displayName)}
+      avatar={profileState.imageURL}
       open={isUserMenuOpen}
       onToggle={toggleIsUserMenuOpen}
     />
@@ -60,11 +86,15 @@ const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
           items: [
             {
               content: 'English',
-              onAction: () => { i18n.changeLanguage('en') },
+              onAction: () => {
+                i18n.changeLanguage('en');
+              },
             },
             {
               content: 'Français',
-              onAction: () => { i18n.changeLanguage('fr') },
+              onAction: () => {
+                i18n.changeLanguage('fr');
+              },
             },
           ],
         },
@@ -75,11 +105,11 @@ const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
   return (
     <TopBar
       showNavigationToggle
-      userMenu={<LoginButton />}
+      userMenu={isLoggedIn() ? userMenuMarkup : <LoginButton />}
       secondaryMenu={secondaryMenuMarkup}
       onNavigationToggle={toggleMobileNavigationActive}
     />
   );
-}
+};
 
 export default Navbar;
