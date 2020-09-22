@@ -41,7 +41,6 @@ const CallbackPage = (props: RouteComponentProps) => {
     const systemState: SystemState = {
       loggedIn: true,
       session: sessionState,
-      userName: 'Daniel Wu',
     };
     dispatch(updateSession(systemState));
     spotifyAPI.profile.get().then((response) => {

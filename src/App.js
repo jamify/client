@@ -1,17 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { AppProvider, Frame, Navigation } from '@shopify/polaris';
-import {
-  CirclePlusMajorMonotone,
-  HintMajorMonotone,
-  PopularMajorTwotone,
-} from '@shopify/polaris-icons';
+import { AppProvider, Frame } from '@shopify/polaris';
 
 import './App.css';
 
 import Navbar from './components/Navbar';
 import CallbackPage from './views/CallbackPage';
+import Sidebar from './components/Sidebar';
 
 function App() {
   const [mobileNavigationActive, setMobileNavigationActive] = useState(false);
@@ -22,35 +18,6 @@ function App() {
         (mobileNavigationActive) => !mobileNavigationActive
       ),
     []
-  );
-
-  const Sidebar = (
-    <Navigation location="/">
-      <Navigation.Section
-        items={[
-          {
-            url: '/popular',
-            label: 'popular',
-            icon: PopularMajorTwotone,
-          },
-          {
-            url: '/new',
-            label: 'new',
-            icon: HintMajorMonotone,
-          },
-        ]}
-      />
-      <Navigation.Section
-        items={[
-          {
-            url: '/create',
-            label: 'create_post',
-            icon: CirclePlusMajorMonotone,
-          },
-        ]}
-        separator
-      />
-    </Navigation>
   );
 
   const theme = {
@@ -101,7 +68,7 @@ function App() {
               toggleMobileNavigationActive={toggleMobileNavigationActive}
             />
           }
-          navigation={Sidebar}
+          navigation={<Sidebar />}
           showMobileNavigation={mobileNavigationActive}
           onNavigationDismiss={toggleMobileNavigationActive}
         >

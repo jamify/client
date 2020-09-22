@@ -9,12 +9,12 @@ import {
   ProfileMajorMonotone,
 } from '@shopify/polaris-icons';
 
-import LoginButton from '../LoginButton';
+import './Navbar.css';
 
+import LoginButton from '../LoginButton';
 import { RootState } from '../../store';
 import { SystemState } from '../../store/system/types';
 import { ProfileState } from '../../store/profile/types';
-import { profile } from 'console';
 
 type NavbarProps = {
   toggleMobileNavigationActive: any;
@@ -70,6 +70,12 @@ const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
     />
   );
 
+  const loginContainerMarkup = (
+    <div className="navbar-login-container">
+      <LoginButton />
+    </div>
+  );
+
   const secondaryMenuMarkup = (
     <TopBar.Menu
       activatorContent={
@@ -105,7 +111,7 @@ const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
   return (
     <TopBar
       showNavigationToggle
-      userMenu={isLoggedIn() ? userMenuMarkup : <LoginButton />}
+      userMenu={isLoggedIn() ? userMenuMarkup : loginContainerMarkup}
       secondaryMenu={secondaryMenuMarkup}
       onNavigationToggle={toggleMobileNavigationActive}
     />

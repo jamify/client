@@ -14,7 +14,6 @@ const initialSessionState: SessionState = {
 const initialSystemState: SystemState = {
   loggedIn: false,
   session: initialSessionState,
-  userName: '',
 };
 
 export function systemReducer(
