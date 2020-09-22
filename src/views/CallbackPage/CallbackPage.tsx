@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import spotifyAPI from '../../api';
+import { updateDevices } from '../../store/devices/actions';
+import { DevicesState } from '../../store/devices/types';
 import { updateProfile } from '../../store/profile/actions';
 import { ProfileState } from '../../store/profile/types';
 
@@ -55,7 +57,13 @@ const CallbackPage = (props: RouteComponentProps) => {
       };
       dispatch(updateProfile(newProfileState));
     });
-    history.push('/');
+    spotifyAPI.devices.get().then((devices) => {
+      const newDevicesState: DevicesState = {
+        devices: devices,
+      };
+      dispatch(updateDevices(newDevicesState));
+      console.log(newDevicesState);
+    });
   });
 
   return (
