@@ -4,7 +4,7 @@ const initialDevicesState: DevicesState = {
   devices: [],
 };
 
-export function profileReducer(
+export function devicesReducer(
   state = initialDevicesState,
   action: DevicesActionTypes
 ): DevicesState {

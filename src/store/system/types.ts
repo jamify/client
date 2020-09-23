@@ -1,3 +1,5 @@
+import { Device } from '../devices/types';
+
 export interface SessionState {
   token: string;
   tokenType: string;
@@ -7,6 +9,7 @@ export interface SessionState {
 export interface SystemState {
   loggedIn: boolean;
   session: SessionState;
+  currentDevice?: Device;
 }
 
 export const UPDATE_SESSION = 'UPDATE_SESSION';
