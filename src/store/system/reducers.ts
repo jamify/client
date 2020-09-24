@@ -1,4 +1,3 @@
-import { Device } from '../devices/types';
 import {
   SystemState,
   SessionState,

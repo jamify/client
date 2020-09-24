@@ -101,6 +101,7 @@ const DevicesPage = () => {
   return (
     <Page
       title="Devices"
+      subtitle="Select a device from below to stream music on."
       primaryAction={
         <Button primary onClick={refreshDevices} loading={isRefreshing}>
           Refresh

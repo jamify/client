@@ -4,9 +4,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18next from 'i18next';
 import { Provider } from 'react-redux';
 
-import { AppProvider } from '@shopify/polaris';
 import '@shopify/polaris/dist/styles.css';
-import enTranslations from '@shopify/polaris/locales/en.json';
 
 import App from './App';
 import store from './store';

@@ -64,18 +64,18 @@ function App() {
           },
         }}
       >
-        <Frame
-          topBar={
-            <Navbar
-              toggleMobileNavigationActive={toggleMobileNavigationActive}
-            />
-          }
-          navigation={<Sidebar />}
-          showMobileNavigation={mobileNavigationActive}
-          onNavigationDismiss={toggleMobileNavigationActive}
-        >
-          <div>
-            <Router>
+        <Router>
+          <Frame
+            topBar={
+              <Navbar
+                toggleMobileNavigationActive={toggleMobileNavigationActive}
+              />
+            }
+            navigation={<Sidebar />}
+            showMobileNavigation={mobileNavigationActive}
+            onNavigationDismiss={toggleMobileNavigationActive}
+          >
+            <div>
               <Switch>
                 <Route exact path="/" component={PopularPage}></Route>
                 <Route path="/popular" component={PopularPage}></Route>
@@ -83,9 +83,9 @@ function App() {
                 <Route path="/devices" component={DevicesPage}></Route>
                 <Route path="/callback" component={CallbackPage}></Route>
               </Switch>
-            </Router>
-          </div>
-        </Frame>
+            </div>
+          </Frame>
+        </Router>
       </AppProvider>
     </div>
   );

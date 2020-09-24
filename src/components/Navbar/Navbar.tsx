@@ -1,12 +1,14 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 import { Icon, TopBar, VisuallyHidden } from '@shopify/polaris';
 import {
   ArrowLeftMinor,
   LanguageMinor,
   ProfileMajorMonotone,
+  MobileMajorMonotone,
 } from '@shopify/polaris-icons';
 
 import './Navbar.css';
@@ -30,6 +32,8 @@ const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
   const [isSecondaryMenuOpen, setIsSecondaryMenuOpen] = useState(false);
 
   const [t, i18n] = useTranslation('common');
+
+  const history = useHistory();
 
   const toggleIsUserMenuOpen = useCallback(
     () => setIsUserMenuOpen((isUserMenuOpen) => !isUserMenuOpen),
@@ -56,6 +60,17 @@ const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
       actions={[
         {
           items: [{ content: 'Profile', icon: ProfileMajorMonotone }],
+        },
+        {
+          items: [
+            {
+              content: 'Devices',
+              icon: MobileMajorMonotone,
+              onAction: () => {
+                history.push('/devices');
+              },
+            },
+          ],
         },
         {
           items: [{ content: 'Logout', icon: ArrowLeftMinor }],
