@@ -3,6 +3,7 @@ import React from 'react';
 import { Page } from '@shopify/polaris';
 
 import ChannelsContainer from '../../components/ChannelsContainer';
+import jamifyAPI from '../../api/jamify';
 
 const mockResponse = {
   isSuccess: true,
@@ -126,7 +127,13 @@ const mockResponse = {
   ],
 };
 
+const getChannels = async () => {
+  const response: any = await jamifyAPI.channels.get.all();
+  console.log(response);
+};
+
 const PopularPage = () => {
+  getChannels();
   return (
     <Page title="Popular" fullWidth>
       <ChannelsContainer channels={mockResponse.channels} />

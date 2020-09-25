@@ -4,7 +4,7 @@ import { Card, Layout } from '@shopify/polaris';
 
 import './Channel.css';
 import { useDispatch, useSelector } from 'react-redux';
-import spotifyAPI from '../../api';
+import { spotifyAPI } from '../../api';
 import { RootState } from '../../store';
 import { Device, DevicesState } from '../../store/devices/types';
 import { Track } from '../../store/player/types';

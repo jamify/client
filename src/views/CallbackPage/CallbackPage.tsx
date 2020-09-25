@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
-import spotifyAPI from '../../api';
+import { spotifyAPI } from '../../api';
 import { updateProfile } from '../../store/profile/actions';
 import { ProfileState } from '../../store/profile/types';
 
@@ -52,6 +52,7 @@ const CallbackPage = (props: RouteComponentProps) => {
         country: data.country,
         uri: data.uri,
         imageURL: data.images[0].url,
+        id: data.id,
       };
       dispatch(updateProfile(newProfileState));
     });

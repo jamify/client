@@ -1,15 +1,5 @@
-import { getProfile } from './profile';
-import { getDevices } from './devices';
-import player from './player';
+import spotify from './spotify';
+import jamify from './jamify';
 
-const spotifyAPI = {
-  profile: {
-    get: getProfile,
-  },
-  devices: {
-    get: getDevices,
-  },
-  player,
-};
-
-export default spotifyAPI;
+export const spotifyAPI = spotify;
+export const jamifyAPI = jamify;

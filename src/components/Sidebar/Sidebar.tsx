@@ -20,7 +20,9 @@ const Sidebar = withRouter(({ history }) => {
             icon: PopularMajorTwotone,
           },
           {
-            url: '/new',
+            onClick: () => {
+              history.push('/host');
+            },
             label: 'new',
             icon: HintMajorMonotone,
           },

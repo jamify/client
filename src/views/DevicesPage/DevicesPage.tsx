@@ -4,7 +4,7 @@ import { Button, Card, Layout, Page } from '@shopify/polaris';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { Device, DevicesState } from '../../store/devices/types';
-import spotifyAPI from '../../api';
+import { spotifyAPI } from '../../api';
 import { updateDevices } from '../../store/devices/actions';
 import { updateSession } from '../../store/system/actions';
 import { SystemState } from '../../store/system/types';
@@ -23,7 +23,7 @@ const DevicesPage = () => {
   const refreshDevices = async () => {
     setIsRefreshing(true);
     try {
-      const devices = await spotifyAPI.devices.get();
+      const devices = await spotifyAPI.player.devices.get();
       const newDevicesState: DevicesState = {
         devices: devices,
       };

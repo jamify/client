@@ -5,6 +5,7 @@ export interface ProfileState {
   country: string;
   uri: string;
   imageURL: string;
+  id: string;
 }
 
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';

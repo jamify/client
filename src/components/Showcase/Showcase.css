@@ -1,0 +1,11 @@
+.channel-creator {
+  font-size: 12px;
+  color: #8893a0;
+  margin-top: -20px;
+}
+
+.channel-image {
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+}

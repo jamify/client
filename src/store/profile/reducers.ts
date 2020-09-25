@@ -7,6 +7,7 @@ const initialProfileState: ProfileState = {
   country: '',
   uri: '',
   imageURL: '',
+  id: '',
 };
 
 export function profileReducer(

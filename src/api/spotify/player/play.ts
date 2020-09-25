@@ -1,5 +1,5 @@
-import { Device } from '../../store/devices/types';
-import { Track } from '../../store/player/types';
+import { Device } from '../../../store/devices/types';
+import { Track } from '../../../store/player/types';
 import spotifyClient from '../spotify';
 
 interface Body {
@@ -19,6 +19,5 @@ export const playTrack = async (
     `/v1/me/player/play?device_id=${device.id}`,
     body
   );
-  console.log(response);
   return true;
 };
