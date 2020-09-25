@@ -8,6 +8,8 @@ import './App.css';
 import Navbar from './components/Navbar';
 import CallbackPage from './views/CallbackPage';
 import Sidebar from './components/Sidebar';
+import AuthenticatedRoute from './components/AuthenticatedRoute';
+
 import PopularPage from './views/PopularPage';
 import DevicesPage from './views/DevicesPage';
 import HostPage from './views/HostPage';
@@ -38,33 +40,14 @@ function App() {
       width: 40,
       topBarSource:
         'https://raw.githubusercontent.com/jamify/assets/f3587610a46acb54630041f7276dd010d921dfb8/logo/logo.svg',
-      url: '/',
+      url: '',
       accessibilityLabel: 'Jamify',
     },
   };
 
   return (
     <div>
-      <AppProvider
-        theme={theme}
-        features={{ newDesignLanguage: true }}
-        i18n={{
-          Polaris: {
-            Avatar: {
-              label: 'Avatar',
-              labelWithInitials: 'Avatar with initials {initials}',
-            },
-            Frame: { skipToContent: 'Skip to content' },
-            TopBar: {
-              toggleMenuLabel: 'Toggle menu',
-              SearchField: {
-                clearButtonLabel: 'Clear',
-                search: 'Search',
-              },
-            },
-          },
-        }}
-      >
+      <AppProvider theme={theme} features={{ newDesignLanguage: true }}>
         <Router>
           <Frame
             topBar={
@@ -80,10 +63,16 @@ function App() {
               <Switch>
                 <Route exact path="/" component={PopularPage}></Route>
                 <Route path="/popular" component={PopularPage}></Route>
-                <Route path="/new"></Route>
-                <Route path="/host" component={HostPage}></Route>
-                <Route path="/devices" component={DevicesPage}></Route>
                 <Route path="/callback" component={CallbackPage}></Route>
+                <Route path="/new"></Route>
+                <AuthenticatedRoute
+                  path="/host"
+                  component={HostPage}
+                ></AuthenticatedRoute>
+                <AuthenticatedRoute
+                  path="/devices"
+                  component={DevicesPage}
+                ></AuthenticatedRoute>
               </Switch>
             </div>
           </Frame>

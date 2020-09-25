@@ -13,7 +13,6 @@ const Showcase = () => {
   const playerState: PlayerState = useSelector(selectPlayerState);
 
   const imageURL = playerState.currentTrack?.album.images[0].url;
-  const artists = playerState.currentTrack?.artists;
 
   const getArtistsText = (): string => {
     const artists = playerState.currentTrack?.artists;
