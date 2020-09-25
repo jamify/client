@@ -1,7 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RouteComponentProps } from 'react-router-dom';
 
-const ChannelPage = () => {
-  return <div>Channel Page</div>;
+import { RootState } from '../../store';
+import { PlayerState, Track } from '../../store/player/types';
+import { SystemState } from '../../store/system/types';
+
+import Showcase from '../../components/Showcase';
+import AuthenticatedRoute from '../../components/AuthenticatedRoute';
+
+import DevicesPage from '../DevicesPage';
+import { Device } from '../../store/devices/types';
+import { spotifyAPI } from '../../api';
+import { Page } from '@shopify/polaris';
+
+const ChannelPage = (props: RouteComponentProps) => {
+  const selectPlayerState = (state: RootState) => state.player;
+  const playerState: PlayerState = useSelector(selectPlayerState);
+
+  const selectSystemState = (state: RootState) => state.system;
+  const systemState: SystemState = useSelector(selectSystemState);
+
+  const params: any = props.match.params;
+
+  const playTrack = () => {
+    const track: Track = playerState.currentTrack as Track;
+    spotifyAPI.player.play(track, systemState.currentDevice as Device);
+  };
+
+  if (systemState.currentDevice) {
+    playTrack();
+    return (
+      <Page
+        title={`${params.channelId}'s Channel`}
+        subtitle={'You are currently listening in the channel!'}
+      >
+        <Showcase />
+      </Page>
+    );
+  }
+  return <AuthenticatedRoute path="/devices" component={DevicesPage} />;
 };
 
 export default ChannelPage;

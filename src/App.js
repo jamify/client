@@ -13,6 +13,7 @@ import AuthenticatedRoute from './components/AuthenticatedRoute';
 import PopularPage from './views/PopularPage';
 import DevicesPage from './views/DevicesPage';
 import HostPage from './views/HostPage';
+import ChannelPage from './views/ChannelPage';
 
 function App() {
   const [mobileNavigationActive, setMobileNavigationActive] = useState(false);
@@ -61,18 +62,16 @@ function App() {
           >
             <div>
               <Switch>
-                <Route exact path="/" component={PopularPage}></Route>
-                <Route path="/popular" component={PopularPage}></Route>
-                <Route path="/callback" component={CallbackPage}></Route>
-                <Route path="/new"></Route>
+                <Route exact path="/" component={PopularPage} />
+                <Route path="/popular" component={PopularPage} />
+                <Route path="/callback" component={CallbackPage} />
+                <Route path="/new" />
+                <AuthenticatedRoute path="/host" component={HostPage} />
+                <AuthenticatedRoute path="/devices" component={DevicesPage} />
                 <AuthenticatedRoute
-                  path="/host"
-                  component={HostPage}
-                ></AuthenticatedRoute>
-                <AuthenticatedRoute
-                  path="/devices"
-                  component={DevicesPage}
-                ></AuthenticatedRoute>
+                  path="/channels/:channelId"
+                  component={ChannelPage}
+                />
               </Switch>
             </div>
           </Frame>

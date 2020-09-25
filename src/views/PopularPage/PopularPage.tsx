@@ -9,7 +9,7 @@ const getChannels = async () => {
   const response: any = await jamifyAPI.channels.get.all();
   const { channels } = response;
   const filteredChannels = channels.filter((channel: any) => {
-    return (!channel.isPaused && channel.track)
+    return !channel.isPaused && channel.track;
   });
   return filteredChannels;
 };
@@ -19,29 +19,28 @@ const PopularPage = () => {
   const [channels, setChannels] = useState([]);
 
   useEffect(() => {
-    getChannels().then((channels) => {
-      setChannels(channels);
-      setIsLoaded(true);
-    }).catch(() => {
-      setIsLoaded(true);
-    });
+    getChannels()
+      .then((channels) => {
+        setChannels(channels);
+        console.log(channels);
+        setIsLoaded(true);
+      })
+      .catch(() => {
+        setIsLoaded(true);
+      });
   }, []);
 
-  if(isLoaded) {
+  if (isLoaded) {
     if (channels.length == 0) {
-      return (
-        <div>
-          No active channels 😞
-        </div>
-      )
+      return <div>No active channels 😞</div>;
     }
     return (
-      <Page title="Popular" fullWidth>
+      <Page title="Popular">
         <ChannelsContainer channels={channels} />
       </Page>
     );
   }
-  return <Spinner size="large" color="teal" />
+  return <Spinner size="large" color="teal" />;
 };
 
 export default PopularPage;

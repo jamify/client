@@ -1,35 +1,46 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Card, Layout } from '@shopify/polaris';
 
-import './Channel.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { spotifyAPI } from '../../api';
 import { RootState } from '../../store';
-import { Device, DevicesState } from '../../store/devices/types';
-import { Track } from '../../store/player/types';
+import { PlayerState } from '../../store/player/types';
 import { SystemState } from '../../store/system/types';
+
+import { updatePlayer } from '../../store/player/actions';
+
+import './Channel.css';
 
 const Channel = (props: any) => {
   const dispatch = useDispatch();
 
+  const history = useHistory();
+
   const selectSystemState = (state: RootState) => state.system;
   const systemState: SystemState = useSelector(selectSystemState);
 
+  const channelId = props.channel._id;
   const {
-    channel: { track },
+    channel: { track, position, isPaused },
   } = props;
   const {
     album: { images },
     name,
   } = track;
   const joinChannel = () => {
-    const trackToPlay: Track = track;
-    spotifyAPI.player.play(trackToPlay, systemState.currentDevice as Device);
+    const newPlayerState: PlayerState = {
+      isPaused,
+      position,
+      currentTrack: track,
+    };
+    dispatch(updatePlayer(newPlayerState));
+    history.push(`/channels/${channelId}`);
   };
+
   const coverImage = images[0].url;
   return (
-    <Layout.Section oneHalf>
+    <Layout.Section>
       <Card
         title={name}
         primaryFooterAction={{ content: 'Join Channel', onAction: joinChannel }}
