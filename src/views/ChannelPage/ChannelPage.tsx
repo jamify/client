@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { RootState } from '../../store';
@@ -13,6 +13,10 @@ import DevicesPage from '../DevicesPage';
 import { Device } from '../../store/devices/types';
 import { spotifyAPI } from '../../api';
 import { Page } from '@shopify/polaris';
+import { updatePlayer } from '../../store/player/actions';
+import socket from '../../utils/socket';
+
+let lastUpdate: number = -1;
 
 const ChannelPage = (props: RouteComponentProps) => {
   const selectPlayerState = (state: RootState) => state.player;
@@ -21,6 +25,8 @@ const ChannelPage = (props: RouteComponentProps) => {
   const selectSystemState = (state: RootState) => state.system;
   const systemState: SystemState = useSelector(selectSystemState);
 
+  const dispatch = useDispatch();
+
   const params: any = props.match.params;
 
   const playTrack = () => {
@@ -28,7 +34,20 @@ const ChannelPage = (props: RouteComponentProps) => {
     spotifyAPI.player.play(track, systemState.currentDevice as Device);
   };
 
+  socket.on('track', (data: any) => {
+    if (+new Date() - lastUpdate > 2000) {
+      const newPlayerState: PlayerState = {
+        currentTrack: data.track,
+        position: data.position,
+        isPaused: data.isPaued,
+      };
+      lastUpdate = +new Date();
+      dispatch(updatePlayer(newPlayerState));
+    }
+  });
+
   if (systemState.currentDevice) {
+    socket.emit('channel', params.channelId);
     playTrack();
     return (
       <Page

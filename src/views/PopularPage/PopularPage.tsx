@@ -22,7 +22,6 @@ const PopularPage = () => {
     getChannels()
       .then((channels) => {
         setChannels(channels);
-        console.log(channels);
         setIsLoaded(true);
       })
       .catch(() => {
