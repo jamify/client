@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Card, Layout } from '@shopify/polaris';
+import { Card, Heading, TextContainer, Thumbnail } from '@shopify/polaris';
 
 import { RootState } from '../../store';
 import { PlayerState } from '../../store/player/types';
@@ -17,17 +17,18 @@ const Channel = (props: any) => {
 
   const history = useHistory();
 
-  const selectSystemState = (state: RootState) => state.system;
-  const systemState: SystemState = useSelector(selectSystemState);
-
   const channelId = props.channel._id;
+
   const {
     channel: { track, position, isPaused },
   } = props;
+
   const {
     album: { images },
+    artists,
     name,
   } = track;
+
   const joinChannel = () => {
     const newPlayerState: PlayerState = {
       isPaused,
@@ -39,17 +40,25 @@ const Channel = (props: any) => {
   };
 
   const coverImage = images[0].url;
+
+  const getArtistsText = (): string => {
+    const artistsTextArray: string[] = artists.map((artist: any) => {
+      return artist.name;
+    });
+    return artistsTextArray.join(', ');
+  };
+
   return (
-    <Layout.Section>
-      <Card
-        title={name}
-        primaryFooterAction={{ content: 'Join Channel', onAction: joinChannel }}
-      >
-        <Card.Section>
-          <img src={coverImage} />
-        </Card.Section>
+    <div className="card-container" onClick={joinChannel}>
+      <Card sectioned>
+        <TextContainer>
+          <p className="channel-id">Host: {channelId}</p>
+          <Thumbnail size="large" source={coverImage} alt="Album cover art" />
+          <div className="channel-title">{name}</div>
+          <p className="channel-artists">By: {getArtistsText()}</p>
+        </TextContainer>
       </Card>
-    </Layout.Section>
+    </div>
   );
 };
 

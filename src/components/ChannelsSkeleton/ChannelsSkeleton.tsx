@@ -16,6 +16,7 @@ const generateSkeletons = (amount: number) => {
       <div className="card-container">
         <Card sectioned>
           <TextContainer>
+            <SkeletonBodyText lines={1} />
             <SkeletonThumbnail size="large" />
             <SkeletonDisplayText size="small" />
             <SkeletonBodyText lines={2} />

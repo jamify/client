@@ -17,7 +17,7 @@ const generateChannelsMarkup = (channels: any) => {
 const ChannelsContainer = (props: ChannelsContainerProps) => {
   const { channels } = props;
   const channelMarkup = generateChannelsMarkup(channels);
-  return <Layout>{channelMarkup}</Layout>;
+  return <div className="layout-container">{channelMarkup}</div>;
 };
 
 export default ChannelsContainer;
