@@ -42,7 +42,7 @@ function App() {
       width: 40,
       topBarSource:
         'https://raw.githubusercontent.com/jamify/assets/f3587610a46acb54630041f7276dd010d921dfb8/logo/logo.svg',
-      url: '',
+      url: '/',
       accessibilityLabel: 'Jamify',
     },
   };

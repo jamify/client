@@ -11,9 +11,11 @@ import {
 import './ChannelsSkeleton.css';
 
 const generateSkeletons = (amount: number) => {
-  return [...Array(amount)].map(() => {
+  let key = 0;
+  return [...Array(amount)].map((n: number) => {
+    key += 1;
     return (
-      <div className="card-container">
+      <div className="card-container" key={key}>
         <Card sectioned>
           <TextContainer>
             <SkeletonBodyText lines={1} />

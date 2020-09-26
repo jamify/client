@@ -1,15 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
+import { Redirect, RouteComponentProps } from 'react-router-dom';
 
 import { RootState } from '../../store';
 import { PlayerState, Track } from '../../store/player/types';
 import { SystemState } from '../../store/system/types';
 
 import Showcase from '../../components/Showcase';
-import AuthenticatedRoute from '../../components/AuthenticatedRoute';
 
-import DevicesPage from '../DevicesPage';
 import { Device } from '../../store/devices/types';
 import { spotifyAPI } from '../../api';
 import { Page } from '@shopify/polaris';
@@ -58,7 +56,7 @@ const ChannelPage = (props: RouteComponentProps) => {
       </Page>
     );
   }
-  return <AuthenticatedRoute path="/devices" component={DevicesPage} />;
+  return <Redirect to={{ pathname: '/devices' }} />;
 };
 
 export default ChannelPage;
