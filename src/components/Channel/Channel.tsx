@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Card, Heading, TextContainer, Thumbnail } from '@shopify/polaris';
+import { Card, Icon, TextContainer, Thumbnail } from '@shopify/polaris';
+import { PlayMinor } from '@shopify/polaris-icons';
 
 import { RootState } from '../../store';
 import { PlayerState } from '../../store/player/types';
@@ -13,6 +14,8 @@ import { updatePlayer } from '../../store/player/actions';
 import './Channel.css';
 
 const Channel = (props: any) => {
+  const [isShown, setIsShown] = useState(false);
+
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -49,7 +52,24 @@ const Channel = (props: any) => {
   };
 
   return (
-    <div className="card-container" onClick={joinChannel}>
+    <div
+      className="card-container"
+      onClick={joinChannel}
+      onMouseEnter={() => {
+        setIsShown(true);
+      }}
+      onMouseLeave={() => {
+        setIsShown(false);
+      }}
+    >
+      <div
+        className="card-play-container"
+        style={{ display: isShown ? 'inline-block' : 'none' }}
+      >
+        <div className="card-play-button">
+          <Icon color="base" source={PlayMinor} />
+        </div>
+      </div>
       <Card sectioned>
         <TextContainer>
           <p className="channel-id">Host: {channelId}</p>

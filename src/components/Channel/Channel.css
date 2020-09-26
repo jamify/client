@@ -2,6 +2,7 @@
   min-width: 200px;
   max-width: 200px;
   cursor: pointer;
+  position: relative;
 }
 
 .Polaris-Thumbnail--sizeLarge {
@@ -34,4 +35,23 @@
   -webkit-box-orient: vertical;
   overflow-wrap: break-word;
   overflow: hidden;
+}
+
+.card-play-container {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+}
+
+.card-play-button {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  width: 48px;
+  background-color: #40a355;
+  border-radius: 24px;
+}
+
+.Polaris-Icon--colorBase svg {
+  fill: white;
 }
