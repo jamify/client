@@ -59,7 +59,15 @@ const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
     <TopBar.UserMenu
       actions={[
         {
-          items: [{ content: 'Profile', icon: ProfileMajorMonotone }],
+          items: [
+            {
+              content: 'Profile',
+              icon: ProfileMajorMonotone,
+              onAction: () => {
+                window.open(`https://open.spotify.com/user/${profileState.id}`);
+              },
+            },
+          ],
         },
         {
           items: [
