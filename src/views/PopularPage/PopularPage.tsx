@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-import { Page, Spinner } from '@shopify/polaris';
+import { Page } from '@shopify/polaris';
 
 import ChannelsContainer from '../../components/ChannelsContainer';
+import ChannelsSkeleton from '../../components/ChannelsSkeleton';
+
 import jamifyAPI from '../../api/jamify';
 
 const getChannels = async () => {
@@ -29,17 +31,24 @@ const PopularPage = () => {
       });
   }, []);
 
-  if (isLoaded) {
-    if (channels.length == 0) {
-      return <div>No active channels 😞</div>;
+  const renderBody = () => {
+    if (isLoaded) {
+      if (channels.length == 0) {
+        return <div>No active channels 😞</div>;
+      }
+      return <ChannelsContainer channels={channels} />;
     }
-    return (
-      <Page title="Popular">
-        <ChannelsContainer channels={channels} />
-      </Page>
-    );
-  }
-  return <Spinner size="large" color="teal" />;
+    return <ChannelsSkeleton />;
+  };
+
+  return (
+    <Page
+      title="Popular"
+      subtitle="Browse Jamify channels with the most activity 🚀"
+    >
+      {renderBody()}
+    </Page>
+  );
 };
 
 export default PopularPage;
