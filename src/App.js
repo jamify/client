@@ -14,6 +14,7 @@ import PopularPage from './views/PopularPage';
 import DevicesPage from './views/DevicesPage';
 import HostPage from './views/HostPage';
 import ChannelPage from './views/ChannelPage';
+import NewPage from './views/NewPage';
 
 function App() {
   const [mobileNavigationActive, setMobileNavigationActive] = useState(false);
@@ -64,8 +65,8 @@ function App() {
               <Switch>
                 <Route exact path="/" component={PopularPage} />
                 <Route path="/popular" component={PopularPage} />
+                <Route path="/new" component={NewPage} />
                 <Route path="/callback" component={CallbackPage} />
-                <Route path="/new" />
                 <AuthenticatedRoute path="/host" component={HostPage} />
                 <AuthenticatedRoute path="/devices" component={DevicesPage} />
                 <AuthenticatedRoute

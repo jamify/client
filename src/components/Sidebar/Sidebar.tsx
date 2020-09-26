@@ -44,14 +44,14 @@ const Sidebar = withRouter(({ history }) => {
             onClick: () => {
               history.push('/popular');
             },
-            label: 'popular',
+            label: 'Popular',
             icon: PopularMajorTwotone,
           },
           {
             onClick: () => {
-              history.push('/popular');
+              history.push('/new');
             },
-            label: 'new',
+            label: 'New',
             icon: HintMajorMonotone,
           },
         ]}
