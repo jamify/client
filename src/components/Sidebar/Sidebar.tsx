@@ -3,11 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { Button, Navigation } from '@shopify/polaris';
-import {
-  CirclePlusOutlineMinor,
-  HintMajorMonotone,
-  PopularMajorTwotone,
-} from '@shopify/polaris-icons';
+import { HintMajorMonotone, PopularMajorTwotone } from '@shopify/polaris-icons';
 
 import { RootState } from '../../store';
 import { SystemState } from '../../store/system/types';

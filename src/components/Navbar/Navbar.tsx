@@ -64,6 +64,7 @@ const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
       loggedIn: false,
     };
     dispatch(updateSession(newSystemState));
+    history.push('/');
   };
 
   const userMenuMarkup = (

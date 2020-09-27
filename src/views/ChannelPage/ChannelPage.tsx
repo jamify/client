@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 
@@ -12,6 +12,7 @@ import { Device } from '../../store/devices/types';
 import { spotifyAPI } from '../../api';
 import { Page } from '@shopify/polaris';
 import { updatePlayer } from '../../store/player/actions';
+
 import socket from '../../utils/socket';
 
 let lastUpdate: number = -1;
@@ -31,6 +32,16 @@ const ChannelPage = (props: RouteComponentProps) => {
     const track: Track = playerState.currentTrack as Track;
     spotifyAPI.player.play(track, systemState.currentDevice as Device);
   };
+
+  useEffect(() => {
+    return (): void => {
+      const newPlayerState: PlayerState = {
+        currentTrack: undefined,
+        ...playerState,
+      };
+      dispatch(updatePlayer(newPlayerState));
+    };
+  }, []);
 
   socket.on('track', (data: any) => {
     if (+new Date() - lastUpdate > 2000) {
