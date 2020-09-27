@@ -6,6 +6,7 @@ import ChannelsContainer from '../../components/ChannelsContainer';
 import ChannelsSkeleton from '../../components/ChannelsSkeleton';
 
 import jamifyAPI from '../../api/jamify';
+import NoChannels from '../../components/NoChannels';
 
 const getChannels = async () => {
   const response: any = await jamifyAPI.channels.get.all();
@@ -34,7 +35,7 @@ const PopularPage = () => {
   const renderBody = () => {
     if (isLoaded) {
       if (channels.length == 0) {
-        return <div>No active channels 😞</div>;
+        return <NoChannels />;
       }
       return <ChannelsContainer channels={channels} />;
     }

@@ -4,6 +4,7 @@ import { Page } from '@shopify/polaris';
 
 import ChannelsContainer from '../../components/ChannelsContainer';
 import ChannelsSkeleton from '../../components/ChannelsSkeleton';
+import NoChannels from '../../components/NoChannels';
 
 import jamifyAPI from '../../api/jamify';
 
@@ -34,7 +35,7 @@ const PopularPage = () => {
   const renderBody = () => {
     if (isLoaded) {
       if (channels.length == 0) {
-        return <div>No active channels 😞</div>;
+        return <NoChannels />;
       }
       return <ChannelsContainer channels={channels} />;
     }

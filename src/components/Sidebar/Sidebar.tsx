@@ -24,13 +24,13 @@ const Sidebar = withRouter(({ history }) => {
     if (systemState.loggedIn) {
       return (
         <Button
-          icon={CirclePlusOutlineMinor}
           onClick={() => {
             history.push('/host');
           }}
           fullWidth
+          primary
         >
-          Create Channel
+          Create channel
         </Button>
       );
     }
