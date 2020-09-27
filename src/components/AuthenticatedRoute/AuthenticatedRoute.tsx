@@ -15,8 +15,6 @@ export const AuthenticatedRoute = ({
   const systemState: SystemState = useSelector(selectSystemState);
 
   if (systemState.loggedIn) {
-    console.log('logged in');
-    console.log(rest, component);
     return <Route {...rest} component={component} />;
   }
   return (

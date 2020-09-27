@@ -50,7 +50,7 @@ const ChannelPage = (props: RouteComponentProps) => {
     return (
       <Page
         title={`${params.channelId}'s Channel`}
-        subtitle={'You are currently listening in the channel!'}
+        subtitle={'You are currently listening in the channel 🎶'}
       >
         <Showcase />
       </Page>

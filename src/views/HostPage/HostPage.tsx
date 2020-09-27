@@ -133,7 +133,7 @@ const HostPage = () => {
   return (
     <Page
       title={`${profileState.displayName}'s Channel`}
-      subtitle={'You are currently hosting the channel!'}
+      subtitle={'You are currently hosting the channel 🔊'}
     >
       {renderDisplayMarkdown()}
     </Page>

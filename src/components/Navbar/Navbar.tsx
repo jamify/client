@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
@@ -17,6 +17,7 @@ import LoginButton from '../LoginButton';
 import { RootState } from '../../store';
 import { SystemState } from '../../store/system/types';
 import { ProfileState } from '../../store/profile/types';
+import { updateSession } from '../../store/system/actions';
 
 type NavbarProps = {
   toggleMobileNavigationActive: any;
@@ -32,6 +33,8 @@ const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
   const [isSecondaryMenuOpen, setIsSecondaryMenuOpen] = useState(false);
 
   const [t, i18n] = useTranslation('common');
+
+  const dispatch = useDispatch();
 
   const history = useHistory();
 
@@ -53,6 +56,14 @@ const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
 
   const isLoggedIn = () => {
     return systemState.loggedIn;
+  };
+
+  const logout = () => {
+    const newSystemState: SystemState = {
+      ...systemState,
+      loggedIn: false,
+    };
+    dispatch(updateSession(newSystemState));
   };
 
   const userMenuMarkup = (
@@ -81,7 +92,9 @@ const Navbar = ({ toggleMobileNavigationActive }: NavbarProps) => {
           ],
         },
         {
-          items: [{ content: 'Logout', icon: ArrowLeftMinor }],
+          items: [
+            { content: 'Logout', icon: ArrowLeftMinor, onAction: logout },
+          ],
         },
       ]}
       name={profileState.displayName}
