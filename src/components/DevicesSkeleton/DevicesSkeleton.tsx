@@ -3,7 +3,6 @@ import React from 'react';
 import {
   Card,
   Layout,
-  SkeletonBodyText,
   SkeletonDisplayText,
   TextContainer,
 } from '@shopify/polaris';

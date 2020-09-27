@@ -2,18 +2,18 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 
+import { Page } from '@shopify/polaris';
+
 import { RootState } from '../../store';
 import { PlayerState, Track } from '../../store/player/types';
+import { updatePlayer } from '../../store/player/actions';
 import { SystemState } from '../../store/system/types';
+import { Device } from '../../store/devices/types';
 
 import Showcase from '../../components/Showcase';
 
-import { Device } from '../../store/devices/types';
 import { spotifyAPI } from '../../api';
-import { Page } from '@shopify/polaris';
-import { updatePlayer } from '../../store/player/actions';
-
-import socket from '../../utils/socket';
+import connectSocket from '../../utils/socket';
 
 let lastUpdate: number = -1;
 
@@ -33,17 +33,30 @@ const ChannelPage = (props: RouteComponentProps) => {
     spotifyAPI.player.play(track, systemState.currentDevice as Device);
   };
 
+  const socket = connectSocket();
+
   useEffect(() => {
     return (): void => {
       const newPlayerState: PlayerState = {
         currentTrack: undefined,
         ...playerState,
       };
+      socket.disconnect();
       dispatch(updatePlayer(newPlayerState));
+      spotifyAPI.player.pause();
     };
   }, []);
 
+  socket.on('connected', () => {
+    console.log('connected');
+  });
+
+  socket.on('disconnected', () => {
+    console.log('disconnected');
+  });
+
   socket.on('track', (data: any) => {
+    console.log(data);
     if (+new Date() - lastUpdate > 2000) {
       const newPlayerState: PlayerState = {
         currentTrack: data.track,
