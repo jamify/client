@@ -21,6 +21,9 @@ declare global {
   }
 }
 
+let timestamp: number = -1;
+let spotifySDK: any;
+
 const HostPage = () => {
   const dispatch = useDispatch();
 
@@ -52,9 +55,6 @@ const HostPage = () => {
       dispatch(updatePlayer(newPlayerState));
     };
   }, []);
-
-  let timestamp: number = -1;
-  let spotifySDK: any;
 
   const updateTrack = (state: any) => {
     const currentTrack = state.track_window?.current_track;

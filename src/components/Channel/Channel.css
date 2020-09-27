@@ -5,6 +5,10 @@
   position: relative;
 }
 
+.Polaris-Card {
+  height: 100%;
+}
+
 .Polaris-Thumbnail--sizeLarge {
   width: 100%;
   height: auto;
@@ -17,6 +21,7 @@
   overflow-wrap: break-word;
   font-weight: 700;
   overflow: hidden;
+  height: 40px;
 }
 
 .channel-artists {
