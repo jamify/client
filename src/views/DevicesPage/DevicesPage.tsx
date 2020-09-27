@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-
-import { Button, Card, Layout, Page } from '@shopify/polaris';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button, Card, Layout, Page } from '@shopify/polaris';
+
 import { RootState } from '../../store';
 import { Device, DevicesState } from '../../store/devices/types';
-import { spotifyAPI } from '../../api';
 import { updateDevices } from '../../store/devices/actions';
 import { updateSession } from '../../store/system/actions';
 import { SystemState } from '../../store/system/types';
+
+import DevicesSkeleton from '../../components/DevicesSkeleton';
+
+import { spotifyAPI } from '../../api';
 
 const DevicesPage = () => {
   const dispatch = useDispatch();
@@ -94,6 +97,14 @@ const DevicesPage = () => {
     });
   };
 
+  const renderContent = () => {
+    if (isRefreshing) {
+      return <DevicesSkeleton />;
+    } else {
+      return generateDeviceCards(devicesState.devices);
+    }
+  };
+
   useEffect(() => {
     refreshDevices();
   }, []);
@@ -108,7 +119,7 @@ const DevicesPage = () => {
         </Button>
       }
     >
-      <Layout>{generateDeviceCards(devicesState.devices)}</Layout>
+      <Layout>{renderContent()}</Layout>
     </Page>
   );
 };
