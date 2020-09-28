@@ -13,9 +13,12 @@ import { Device } from '../../store/devices/types';
 import Showcase from '../../components/Showcase';
 
 import { spotifyAPI } from '../../api';
-import connectSocket from '../../utils/socket';
+import createPusherInstance from '../../utils/pusher';
+
+const TRACK = 'track';
 
 let lastUpdate: number = -1;
+let pusher: any;
 
 const ChannelPage = (props: RouteComponentProps) => {
   const selectPlayerState = (state: RootState) => state.player;
@@ -33,43 +36,40 @@ const ChannelPage = (props: RouteComponentProps) => {
     spotifyAPI.player.play(track, systemState.currentDevice as Device);
   };
 
-  const socket = connectSocket();
-
   useEffect(() => {
+    if (!pusher) {
+      pusher = createPusherInstance();
+    }
+    pusher.connect();
+    setupPusher();
     return (): void => {
       const newPlayerState: PlayerState = {
         currentTrack: undefined,
         ...playerState,
       };
-      socket.disconnect();
+      pusher.disconnect();
       dispatch(updatePlayer(newPlayerState));
       spotifyAPI.player.pause();
     };
   }, []);
 
-  socket.on('connected', () => {
-    console.log('connected');
-  });
-
-  socket.on('disconnected', () => {
-    console.log('disconnected');
-  });
-
-  socket.on('track', (data: any) => {
-    console.log(data);
-    if (+new Date() - lastUpdate > 2000) {
-      const newPlayerState: PlayerState = {
-        currentTrack: data.track,
-        position: data.position,
-        isPaused: data.isPaued,
-      };
-      lastUpdate = +new Date();
-      dispatch(updatePlayer(newPlayerState));
-    }
-  });
+  const setupPusher = () => {
+    const { channelId } = params;
+    const channel = pusher.subscribe(channelId);
+    channel.bind(TRACK, (data: any) => {
+      if (+new Date() - lastUpdate > 1000) {
+        const newPlayerState: PlayerState = {
+          currentTrack: data.track,
+          position: data.position,
+          isPaused: data.isPaued,
+        };
+        lastUpdate = +new Date();
+        dispatch(updatePlayer(newPlayerState));
+      }
+    });
+  };
 
   if (systemState.currentDevice) {
-    socket.emit('channel', params.channelId);
     playTrack();
     return (
       <Page
