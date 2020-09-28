@@ -61,7 +61,7 @@ const ChannelPage = (props: RouteComponentProps) => {
         const newPlayerState: PlayerState = {
           currentTrack: data.track,
           position: data.position,
-          isPaused: data.isPaued,
+          isPaused: data.isPaused,
         };
         lastUpdate = +new Date();
         dispatch(updatePlayer(newPlayerState));
