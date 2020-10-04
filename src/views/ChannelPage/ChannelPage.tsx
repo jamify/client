@@ -13,12 +13,13 @@ import { Device } from '../../store/devices/types';
 import Showcase from '../../components/Showcase';
 
 import { spotifyAPI } from '../../api';
-import createPusherInstance from '../../utils/pusher';
+
+import pusher from '../../utils/pusher';
 
 const TRACK = 'track';
+const MESSAGE = 'message';
 
 let lastUpdate: number = -1;
-let pusher: any;
 
 const ChannelPage = (props: RouteComponentProps) => {
   const selectPlayerState = (state: RootState) => state.player;
@@ -37,17 +38,13 @@ const ChannelPage = (props: RouteComponentProps) => {
   };
 
   useEffect(() => {
-    if (!pusher) {
-      pusher = createPusherInstance();
-    }
-    pusher.connect();
     setupPusher();
     return (): void => {
       const newPlayerState: PlayerState = {
-        currentTrack: undefined,
         ...playerState,
+        currentTrack: undefined,
       };
-      pusher.disconnect();
+      pusher().disconnect();
       dispatch(updatePlayer(newPlayerState));
       spotifyAPI.player.pause();
     };
@@ -55,10 +52,11 @@ const ChannelPage = (props: RouteComponentProps) => {
 
   const setupPusher = () => {
     const { channelId } = params;
-    const channel = pusher.subscribe(channelId);
+    const channel = pusher().subscribe(channelId);
     channel.bind(TRACK, (data: any) => {
       if (+new Date() - lastUpdate > 1000) {
         const newPlayerState: PlayerState = {
+          ...playerState,
           currentTrack: data.track,
           position: data.position,
           isPaused: data.isPaused,
@@ -66,6 +64,9 @@ const ChannelPage = (props: RouteComponentProps) => {
         lastUpdate = +new Date();
         dispatch(updatePlayer(newPlayerState));
       }
+    });
+    channel.bind(MESSAGE, (data: any) => {
+      console.log('message', data);
     });
   };
 

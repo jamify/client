@@ -68,6 +68,7 @@ const HostPage = () => {
         album: currentTrack.album,
       };
       const newPlayerState: PlayerState = {
+        ...playerState,
         isPaused: state.paused,
         position: state.position,
         currentTrack: newTrack,

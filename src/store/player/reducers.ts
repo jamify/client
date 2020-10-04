@@ -3,6 +3,7 @@ import { PlayerState, PlayerActionTypes, UPDATE_PLAYER } from './types';
 const initialPlayerState: PlayerState = {
   isPaused: true,
   position: 0,
+  comments: [],
 };
 
 export function playerReducer(

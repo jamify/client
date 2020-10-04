@@ -1,0 +1,30 @@
+.comments-container-height-adjust {
+  margin-top: 16px;
+}
+
+.comments-container {
+  margin-top: 4px;
+  border: 1px solid #bdc4cd;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  height: 175px;
+  overflow-y: scroll;
+}
+
+.comment-input-container {
+  position: relative;
+}
+
+.button-container {
+  height: 100%;
+  position: absolute;
+  z-index: 99;
+  right: 0px;
+  top: 0px;
+  margin: 0 12px;
+  width: 32px;
+}
+
+.Polaris-TextField__Input {
+  padding-right: 48px;
+}

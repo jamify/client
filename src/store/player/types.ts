@@ -1,3 +1,9 @@
+export interface Comment {
+  id: string;
+  message: string;
+  timestamp: string;
+}
+
 export interface Track {
   id: string;
   uri: string;
@@ -11,6 +17,7 @@ export interface PlayerState {
   isPaused: boolean;
   position: number;
   currentTrack?: Track;
+  comments: Comment[];
 }
 
 export const UPDATE_PLAYER = 'UPDATE_PLAYER';

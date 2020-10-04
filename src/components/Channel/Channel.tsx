@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { Card, Icon, TextContainer, Thumbnail } from '@shopify/polaris';
 import { PlayMinor } from '@shopify/polaris-icons';
 
-import { RootState } from '../../store';
 import { PlayerState } from '../../store/player/types';
-import { SystemState } from '../../store/system/types';
 
 import { updatePlayer } from '../../store/player/actions';
 
@@ -37,6 +35,7 @@ const Channel = (props: any) => {
       isPaused,
       position,
       currentTrack: track,
+      comments: [],
     };
     dispatch(updatePlayer(newPlayerState));
     history.push(`/channels/${channelId}`);
