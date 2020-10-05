@@ -12,7 +12,7 @@ import { Device } from '../../store/devices/types';
 
 import Showcase from '../../components/Showcase';
 
-import { spotifyAPI } from '../../api';
+import { jamifyAPI, spotifyAPI } from '../../api';
 
 import pusher from '../../utils/pusher';
 
@@ -37,8 +37,20 @@ const ChannelPage = (props: RouteComponentProps) => {
     spotifyAPI.player.play(track, systemState.currentDevice as Device);
   };
 
+  const getChannelComments = async () => {
+    const { channelId } = params;
+    const response = await jamifyAPI.messages.get(channelId);
+    const { messages } = response;
+    const newPlayerState: PlayerState = {
+      ...playerState,
+      comments: messages,
+    };
+    dispatch(updatePlayer(newPlayerState));
+  };
+
   useEffect(() => {
     setupPusher();
+    getChannelComments();
     return (): void => {
       const newPlayerState: PlayerState = {
         ...playerState,

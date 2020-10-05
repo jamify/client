@@ -60,7 +60,7 @@ const Showcase = () => {
       <Layout.Section secondary>
         <Card title={playerState.currentTrack?.name} sectioned>
           <p className="channel-creator">Artists: {getArtistsText()}</p>
-          <CommentsContainer comments={mockComments} />
+          <CommentsContainer comments={playerState.comments} />
         </Card>
       </Layout.Section>
     </Layout>
