@@ -1,7 +1,8 @@
 export interface Comment {
-  id: string;
-  message: string;
-  timestamp: string;
+  userId: string;
+  text: string;
+  createdAt: string;
+  channelId: string;
 }
 
 export interface Track {
@@ -14,6 +15,7 @@ export interface Track {
 }
 
 export interface PlayerState {
+  host: string;
   isPaused: boolean;
   position: number;
   currentTrack?: Track;

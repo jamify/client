@@ -25,6 +25,27 @@
   width: 32px;
 }
 
+.spinner-container {
+  position: absolute;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
 .Polaris-TextField__Input {
   padding-right: 48px;
+}
+
+.Polaris-Spinner {
+  height: 20px;
+}
+
+.Polaris-Spinner--colorInkLightest svg {
+  animation: Polaris-Spinner--loading 500ms linear infinite;
+  fill: #00acee;
 }

@@ -9,12 +9,12 @@ interface CommentProps {
 
 const Comment = (props: CommentProps) => {
   const { comment } = props;
-  const { message, id } = comment;
+  const { text, userId } = comment;
 
   return (
     <div className="comment-container">
-      <p className="comment-user">{id}</p>
-      <p>{message}</p>
+      <p className="comment-user">{userId}</p>
+      <p>{text}</p>
     </div>
   );
 };

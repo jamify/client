@@ -12,12 +12,11 @@ import { Device } from '../../store/devices/types';
 
 import Showcase from '../../components/Showcase';
 
-import { jamifyAPI, spotifyAPI } from '../../api';
+import { spotifyAPI } from '../../api';
 
 import pusher from '../../utils/pusher';
 
 const TRACK = 'track';
-const MESSAGE = 'message';
 
 let lastUpdate: number = -1;
 
@@ -37,25 +36,14 @@ const ChannelPage = (props: RouteComponentProps) => {
     spotifyAPI.player.play(track, systemState.currentDevice as Device);
   };
 
-  const getChannelComments = async () => {
-    const { channelId } = params;
-    const response = await jamifyAPI.messages.get(channelId);
-    const { messages } = response;
-    const newPlayerState: PlayerState = {
-      ...playerState,
-      comments: messages,
-    };
-    dispatch(updatePlayer(newPlayerState));
-  };
-
   useEffect(() => {
     setupPusher();
-    getChannelComments();
     return (): void => {
       const newPlayerState: PlayerState = {
         ...playerState,
         currentTrack: undefined,
       };
+      pusher().unbind_all();
       pusher().disconnect();
       dispatch(updatePlayer(newPlayerState));
       spotifyAPI.player.pause();
@@ -76,9 +64,6 @@ const ChannelPage = (props: RouteComponentProps) => {
         lastUpdate = +new Date();
         dispatch(updatePlayer(newPlayerState));
       }
-    });
-    channel.bind(MESSAGE, (data: any) => {
-      console.log('message', data);
     });
   };
 

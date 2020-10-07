@@ -32,6 +32,7 @@ const Channel = (props: any) => {
 
   const joinChannel = () => {
     const newPlayerState: PlayerState = {
+      host: channelId,
       isPaused,
       position,
       currentTrack: track,

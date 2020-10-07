@@ -1,6 +1,7 @@
 import { PlayerState, PlayerActionTypes, UPDATE_PLAYER } from './types';
 
 const initialPlayerState: PlayerState = {
+  host: '',
   isPaused: true,
   position: 0,
   comments: [],
