@@ -12,7 +12,7 @@ const getChannels = async () => {
   const response: any = await jamifyAPI.channels.get.all();
   const { channels } = response;
   const filteredChannels = channels.filter((channel: any) => {
-    return !channel.isPaused && channel.track;
+    return Object.keys(channel.track).length !== 0;
   });
   return filteredChannels;
 };

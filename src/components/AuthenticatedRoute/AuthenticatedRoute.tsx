@@ -18,7 +18,7 @@ export const AuthenticatedRoute = ({
     return <Route {...rest} component={component} />;
   }
   return (
-    <Route {...rest} render={() => (window.location.href = SpotifyAuthURI())} />
+    <Route {...rest} render={() => (window.location.href = SpotifyAuthURI)} />
   );
 };
 

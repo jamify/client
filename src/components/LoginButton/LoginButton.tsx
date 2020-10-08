@@ -4,7 +4,7 @@ import { Button } from '@shopify/polaris';
 import SpotifyAuthURI from '../../utils/spotifyCallbackURI';
 
 const authorizeSpotify = (): void => {
-  window.location.href = SpotifyAuthURI();
+  window.location.href = SpotifyAuthURI;
 };
 
 type LoginButtonProps = {
