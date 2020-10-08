@@ -17,7 +17,6 @@ const Showcase = () => {
   const imageURL = playerState.track?.album.images[0].url;
 
   const getArtistsText = (): string => {
-    console.log(playerState);
     const artists = playerState.track?.artists;
     const artistsTextArray: string[] = artists.map((artist: any) => {
       return artist.name;
