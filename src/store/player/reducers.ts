@@ -1,10 +1,14 @@
-import { PlayerState, PlayerActionTypes, UPDATE_PLAYER } from './types';
+import {
+  PlayerState,
+  PlayerActionTypes,
+  UPDATE_PLAYER,
+  UPDATE_TRACK,
+  UPDATE_HOST,
+  RESET_PLAYER,
+} from './types';
 
 const initialPlayerState: PlayerState = {
   host: '',
-  isPaused: true,
-  position: 0,
-  comments: [],
 };
 
 export function playerReducer(
@@ -17,6 +21,21 @@ export function playerReducer(
         ...state,
         ...action.payload,
       };
+    }
+    case UPDATE_TRACK: {
+      return {
+        ...state,
+        track: action.payload,
+      };
+    }
+    case UPDATE_HOST: {
+      return {
+        ...state,
+        host: action.payload,
+      };
+    }
+    case RESET_PLAYER: {
+      return initialPlayerState;
     }
     default:
       return state;

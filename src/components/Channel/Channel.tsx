@@ -21,7 +21,7 @@ const Channel = (props: any) => {
   const channelId = props.channel._id;
 
   const {
-    channel: { track, position, isPaused },
+    channel: { track },
   } = props;
 
   const {
@@ -33,10 +33,8 @@ const Channel = (props: any) => {
   const joinChannel = () => {
     const newPlayerState: PlayerState = {
       host: channelId,
-      isPaused,
-      position,
-      currentTrack: track,
-      comments: [],
+
+      track,
     };
     dispatch(updatePlayer(newPlayerState));
     history.push(`/channels/${channelId}`);

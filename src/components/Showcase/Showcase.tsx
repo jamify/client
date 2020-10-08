@@ -14,10 +14,11 @@ const Showcase = () => {
   const selectPlayerState = (state: RootState) => state.player;
   const playerState: PlayerState = useSelector(selectPlayerState);
 
-  const imageURL = playerState.currentTrack?.album.images[0].url;
+  const imageURL = playerState.track?.album.images[0].url;
 
   const getArtistsText = (): string => {
-    const artists = playerState.currentTrack?.artists;
+    console.log(playerState);
+    const artists = playerState.track?.artists;
     const artistsTextArray: string[] = artists.map((artist: any) => {
       return artist.name;
     });
@@ -30,7 +31,7 @@ const Showcase = () => {
         <img className="channel-image" src={imageURL} />
       </Layout.Section>
       <Layout.Section secondary>
-        <Card title={playerState.currentTrack?.name} sectioned>
+        <Card title={playerState.track?.name} sectioned>
           <p className="channel-creator">Artists: {getArtistsText()}</p>
           <CommentsContainer />
         </Card>

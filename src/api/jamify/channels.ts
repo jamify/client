@@ -18,9 +18,9 @@ export const postChannel = async () => {
 export const patchChannel = async () => {
   const state = store.getState();
   const response = await jamifyClient().patch(`/channels/${state.profile.id}`, {
-    isPaused: state.player.isPaused,
-    position: state.player.position,
-    track: state.player.currentTrack,
+    isPaused: state.player.track?.paused,
+    position: state.player.track?.position,
+    track: state.player.track,
   });
   const { data } = response;
   return data;

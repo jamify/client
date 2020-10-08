@@ -6,7 +6,7 @@ import { Page } from '@shopify/polaris';
 
 import { RootState } from '../../store';
 import { PlayerState, Track } from '../../store/player/types';
-import { updatePlayer } from '../../store/player/actions';
+import { resetPlayer, updatePlayer } from '../../store/player/actions';
 import { SystemState } from '../../store/system/types';
 import { Device } from '../../store/devices/types';
 
@@ -32,20 +32,16 @@ const ChannelPage = (props: RouteComponentProps) => {
   const params: any = props.match.params;
 
   const playTrack = () => {
-    const track: Track = playerState.currentTrack as Track;
+    const track: Track = playerState.track as Track;
     spotifyAPI.player.play(track, systemState.currentDevice as Device);
   };
 
   useEffect(() => {
     setupPusher();
     return (): void => {
-      const newPlayerState: PlayerState = {
-        ...playerState,
-        currentTrack: undefined,
-      };
       pusher().unbind_all();
       pusher().disconnect();
-      dispatch(updatePlayer(newPlayerState));
+      dispatch(resetPlayer());
       spotifyAPI.player.pause();
     };
   }, []);
@@ -57,9 +53,7 @@ const ChannelPage = (props: RouteComponentProps) => {
       if (+new Date() - lastUpdate > 1000) {
         const newPlayerState: PlayerState = {
           ...playerState,
-          currentTrack: data.track,
-          position: data.position,
-          isPaused: data.isPaused,
+          track: data.track,
         };
         lastUpdate = +new Date();
         dispatch(updatePlayer(newPlayerState));

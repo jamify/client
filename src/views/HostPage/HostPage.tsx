@@ -9,7 +9,11 @@ import { PlayerState, Track } from '../../store/player/types';
 import { SystemState } from '../../store/system/types';
 import { ProfileState } from '../../store/profile/types';
 
-import { updatePlayer } from '../../store/player/actions';
+import {
+  updateTrack,
+  updateHost,
+  resetPlayer,
+} from '../../store/player/actions';
 
 import Showcase from '../../components/Showcase';
 import { jamifyAPI } from '../../api';
@@ -37,6 +41,7 @@ const HostPage = () => {
   const profileState: ProfileState = useSelector(selectProfileState);
 
   useEffect(() => {
+    dispatch(updateHost(profileState.id));
     const recaptchaScript = document.createElement('script');
     recaptchaScript.setAttribute(
       'src',
@@ -48,15 +53,11 @@ const HostPage = () => {
       if (spotifySDK) {
         spotifySDK.disconnect();
       }
-      const newPlayerState: PlayerState = {
-        currentTrack: undefined,
-        ...playerState,
-      };
-      dispatch(updatePlayer(newPlayerState));
+      dispatch(resetPlayer());
     };
   }, []);
 
-  const updateTrack = (state: any) => {
+  const onPlayerStateChange = (state: any) => {
     const currentTrack = state.track_window?.current_track;
     if (state.timestamp - timestamp > 1000) {
       const newTrack: Track = {
@@ -66,15 +67,11 @@ const HostPage = () => {
         duration: currentTrack.duration_ms,
         artists: currentTrack.artists,
         album: currentTrack.album,
-      };
-      const newPlayerState: PlayerState = {
-        ...playerState,
-        isPaused: state.paused,
+        paused: state.paused,
         position: state.position,
-        currentTrack: newTrack,
       };
       timestamp = state.timestamp;
-      dispatch(updatePlayer(newPlayerState));
+      dispatch(updateTrack(newTrack));
       jamifyAPI.channels.patch();
     }
   };
@@ -116,15 +113,15 @@ const HostPage = () => {
     });
     spotifySDK.on('player_state_changed', (state: any) => {
       if (state) {
-        updateTrack(state);
+        onPlayerStateChange(state);
       }
     });
     spotifySDK.connect();
   };
 
   const renderDisplayMarkdown = () => {
-    const { currentTrack } = playerState;
-    if (currentTrack) {
+    const { track } = playerState;
+    if (track) {
       return <Showcase />;
     } else {
       return <div>Connect your device by opening up the app.</div>;

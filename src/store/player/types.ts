@@ -12,21 +12,41 @@ export interface Track {
   duration: number;
   artists: any;
   album: any;
+  paused: boolean;
+  position: number;
 }
 
 export interface PlayerState {
   host: string;
-  isPaused: boolean;
-  position: number;
-  currentTrack?: Track;
-  comments: Comment[];
+  track?: Track;
 }
 
-export const UPDATE_PLAYER = 'UPDATE_PLAYER';
+export const UPDATE_PLAYER = 'player/UPDATE_PLAYER';
+export const UPDATE_TRACK = 'player/UPDATE_TRACK';
+export const UPDATE_HOST = 'player/UPDATE_HOST';
+export const RESET_PLAYER = 'player/RESET_PLAYER';
 
 interface UpdatePlayerAction {
   type: typeof UPDATE_PLAYER;
   payload: PlayerState;
 }
 
-export type PlayerActionTypes = UpdatePlayerAction;
+interface UpdateTrackAction {
+  type: typeof UPDATE_TRACK;
+  payload: Track;
+}
+
+interface UpdateHostAction {
+  type: typeof UPDATE_HOST;
+  payload: string;
+}
+
+interface ResetPlayerAction {
+  type: typeof RESET_PLAYER;
+}
+
+export type PlayerActionTypes =
+  | UpdatePlayerAction
+  | UpdateTrackAction
+  | UpdateHostAction
+  | ResetPlayerAction;
