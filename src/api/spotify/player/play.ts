@@ -13,7 +13,7 @@ export const playTrack = async (
 ): Promise<boolean> => {
   const body: Body = {
     uris: [track.uri],
-    position_ms: 0,
+    position_ms: track.position,
   };
   const response = await spotifyClient().put(
     `/v1/me/player/play?device_id=${device.id}`,

@@ -25,7 +25,8 @@ declare global {
   }
 }
 
-let timestamp: number = -1;
+let lastTimestamp: number = -1;
+let lastTrackID: string = '';
 let spotifySDK: any;
 
 const HostPage = () => {
@@ -59,7 +60,13 @@ const HostPage = () => {
 
   const onPlayerStateChange = (state: any) => {
     const currentTrack = state.track_window?.current_track;
-    if (state.timestamp - timestamp > 1000) {
+    // resolves issue where Spotify SDK pings after 30s of start of song
+    const relativeDiff = state.timestamp - lastTimestamp - state.position;
+    if (relativeDiff < 1000 && relativeDiff > 0) {
+      return;
+    }
+    if (state.timestamp - lastTimestamp > 1000) {
+      const position = currentTrack.id !== lastTrackID ? 0 : state.position;
       const newTrack: Track = {
         id: currentTrack.id,
         uri: currentTrack.uri,
@@ -68,9 +75,10 @@ const HostPage = () => {
         artists: currentTrack.artists,
         album: currentTrack.album,
         paused: state.paused,
-        position: state.position,
+        position,
       };
-      timestamp = state.timestamp;
+      lastTimestamp = state.timestamp;
+      lastTrackID = currentTrack.id;
       dispatch(updateTrack(newTrack));
       jamifyAPI.channels.patch();
     }
