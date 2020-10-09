@@ -34,7 +34,7 @@ const PopularPage = () => {
 
   const renderBody = () => {
     if (isLoaded) {
-      if (channels.length == 0) {
+      if (!channels.length) {
         return <NoChannels />;
       }
       return <ChannelsContainer channels={channels} />;
